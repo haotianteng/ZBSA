@@ -1,0 +1,22 @@
+minIndex = find(accumCorrelation == max(accumCorrelation));
+% minIndex = 1;
+[FishIndex,CellIndex] = FindIndex(minIndex,accumNum);
+figure;
+Fish = Fishes(FishIndex);
+rastertrails = Fish.rasterAlltrails(Fish.cellsOfInterest,:);
+% Trial1 = rastertrails(CellIndex(1),:);
+% Trial2 = rastertrails(CellIndex(2),:);
+Trial1 = dataOut(CellIndex(1),:);
+Trial2 = dataOut(CellIndex(2),:);
+a=1;
+b=ones(1,20)*0.05;
+Trial1 = filter(b,a,Trial1);
+Trial2 = filter(b,a,Trial2);
+
+plot(Trial1);
+hold on;
+plot(Trial2);
+title(['Origin trial of Cell',num2str(CellIndex(1)),' and ',num2str(CellIndex(2))]);
+xlabel('Time - s');
+ylabel('Strength - DeltaF/F');
+R = cov(Trial1,Trial2)/(std(Trial1)*std(Trial2));
